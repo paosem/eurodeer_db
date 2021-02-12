@@ -107,10 +107,10 @@ DROP TABLE IF EXISTS env_data.forest_density;
 -- In DOS
 raster2pgsql -c -R -F -C -I -x -t 128x128 -N 255 -M E:\eurodeer_data\raster\local_intersection\forest_density_*.tif env_data.forest_density| psql -d eurodeer_db -U postgres  -p 5432
 -- In the databse
-ALTER TABLE  env_data.env_data.forest_density OWNER TO data_curators_eurodeer;
+ALTER TABLE  env_data.forest_density OWNER TO data_curators_eurodeer;
 
 -- Intersection
-UPDATE main.env_data.gps_data_animals_imp
+UPDATE env_data.gps_data_animals_imp
 SET forest_density = st_value(forest_density.rast, geom_3035)
 FROM env_data.forest_density
 WHERE forest_density IS NULL AND st_intersects(forest_density.rast,geom_3035);
